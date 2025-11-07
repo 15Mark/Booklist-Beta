@@ -5,23 +5,23 @@ A comprehensive book management application with user authentication and review 
 ## Features
 
 ### General Users (Tasks 1-7)
-- **Task 1**: Get the book list available in the shop
-- **Task 2**: Get books based on ISBN
-- **Task 3**: Get all books by Author
-- **Task 4**: Get all books based on Title
-- **Task 5**: Get book Review
-- **Task 6**: Register New user
-- **Task 7**: Login as a Registered user
+- Get the book list available in the shop
+- Get books based on ISBN
+- Get all books by Author
+- Get all books based on Title
+- Get book Review
+- Register New user
+- Login as a Registered user
 
 ### Registered Users (Tasks 8-9)
-- **Task 8**: Add/Modify a book review
-- **Task 9**: Delete book review added by that particular user
+- Add/Modify a book review
+- Delete book review added by that particular user
 
 ### Node.js Client Methods (Tasks 10-13)
-- **Task 10**: Get all books – Using async/await
-- **Task 11**: Search by ISBN – Using Promises
-- **Task 12**: Search by Author – Using async/await
-- **Task 13**: Search by Title – Using async/await
+- Get all books – Using async/await
+- Search by ISBN – Using Promises
+- Search by Author – Using async/await
+- Search by Title – Using async/await
 
 ## Installation
 
