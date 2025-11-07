@@ -148,7 +148,7 @@ function authenticateToken(req, res, next) {
 
 // ========== GENERAL USER ENDPOINTS ==========
 
-// Task 1: Get the book list available in the shop
+// Get the book list available in the shop
 app.get('/api/books', async (req, res) => {
   try {
     const books = await readBooks();
@@ -158,7 +158,7 @@ app.get('/api/books', async (req, res) => {
   }
 });
 
-// Task 2: Get books based on ISBN
+// Get books based on ISBN
 app.get('/api/books/isbn/:isbn', async (req, res) => {
   try {
     const books = await readBooks();
@@ -173,7 +173,7 @@ app.get('/api/books/isbn/:isbn', async (req, res) => {
   }
 });
 
-// Task 3: Get all books by Author
+// Get all books by Author
 app.get('/api/books/author/:author', async (req, res) => {
   try {
     const books = await readBooks();
@@ -187,7 +187,7 @@ app.get('/api/books/author/:author', async (req, res) => {
   }
 });
 
-// Task 4: Get all books based on Title
+// Get all books based on Title
 app.get('/api/books/title/:title', async (req, res) => {
   try {
     const books = await readBooks();
@@ -201,7 +201,7 @@ app.get('/api/books/title/:title', async (req, res) => {
   }
 });
 
-// Task 5: Get book Review
+// Get book Review
 app.get('/api/reviews/:isbn', async (req, res) => {
   try {
     const reviews = await readReviews();
@@ -212,7 +212,7 @@ app.get('/api/reviews/:isbn', async (req, res) => {
   }
 });
 
-// Task 6: Register New user
+// Register New user
 app.post('/api/register', async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -252,7 +252,7 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// Task 7: Login as a Registered user
+// Login as a Registered user
 app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -292,7 +292,7 @@ app.post('/api/login', async (req, res) => {
 
 // ========== REGISTERED USER ENDPOINTS ==========
 
-// Task 8: Add/Modify a book review
+// Add/Modify a book review
 app.post('/api/reviews', authenticateToken, async (req, res) => {
   try {
     const { isbn, rating, comment } = req.body;
@@ -346,7 +346,7 @@ app.post('/api/reviews', authenticateToken, async (req, res) => {
   }
 });
 
-// Task 9: Delete book review added by that particular user
+// Delete book review added by that particular user
 app.delete('/api/reviews/:isbn', authenticateToken, async (req, res) => {
   try {
     const { isbn } = req.params;
@@ -381,4 +381,5 @@ initializeData().then(() => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
 });
+
 
