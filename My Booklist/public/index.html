@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Booklist - Book Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('Books.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .auth-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .auth-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .logout-btn {
+            background: #dc3545;
+        }
+
+        .search-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .search-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+
+        .book-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .book-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .book-card p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .review-card {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .review-card p {
+            margin: 5px 0;
+        }
+
+        .rating {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .user-info {
+            background: #d1ecf1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .review-form {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 My Booklist - Book Shop</h1>
+
+        <!-- Authentication Section -->
+        <div class="auth-section">
+            <h2>Authentication</h2>
+            <div id="loginForm">
+                <div class="form-group">
+                    <label>Username:</label>
+                    <input type="text" id="loginUsername" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password">
+                </div>
+                <button onclick="login()">Login</button>
+                <button onclick="showRegisterForm()">Register New User</button>
+            </div>
+
+            <div id="registerForm" class="hidden">
+                <div class="form-group">
+                    <label>Username:</label>
+                    <input type="text" id="regUsername" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="regEmail" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="regPassword" placeholder="Enter password">
+                </div>
+                <button onclick="register()">Register</button>
+                <button onclick="showLoginForm()">Back to Login</button>
+            </div>
+
+            <div id="userInfo" class="hidden">
+                <div class="user-info">
+                    <p><strong>Logged in as:</strong> <span id="loggedInUser"></span></p>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <h2>Search Books</h2>
+            <div class="search-grid">
+                <div>
+                    <button onclick="getAllBooks()">Get All Books</button>
+                </div>
+                <div>
+                    <input type="text" id="isbnSearch" placeholder="Enter ISBN">
+                    <button onclick="searchByISBN()">Search by ISBN</button>
+                </div>
+                <div>
+                    <input type="text" id="authorSearch" placeholder="Enter Author Name">
+                    <button onclick="searchByAuthor()">Search by Author</button>
+                </div>
+                <div>
+                    <input type="text" id="titleSearch" placeholder="Enter Title">
+                    <button onclick="searchByTitle()">Search by Title</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="search-section">
+            <h2>Book Reviews</h2>
+            <div class="form-group">
+                <input type="text" id="reviewISBN" placeholder="Enter ISBN to view reviews">
+                <button onclick="getBookReviews()">Get Book Reviews</button>
+            </div>
+
+            <div id="reviewForm" class="hidden review-form">
+                <h3>Add/Modify Review (Registered Users Only)</h3>
+                <div class="form-group">
+                    <label>ISBN:</label>
+                    <input type="text" id="addReviewISBN" placeholder="Enter ISBN">
+                </div>
+                <div class="form-group">
+                    <label>Rating (1-5):</label>
+                    <select id="reviewRating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Comment:</label>
+                    <textarea id="reviewComment" rows="3" placeholder="Enter your review"></textarea>
+                </div>
+                <button onclick="addOrModifyReview()">Add/Modify Review</button>
+                <button onclick="deleteReview()">Delete My Review</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="message"></div>
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        let authToken = null;
+        let currentUser = null;
+
+        // Show message
+        function showMessage(text, type = 'success') {
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = text;
+            messageDiv.classList.remove('hidden');
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Show login form
+        function showLoginForm() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+        }
+
+        // Show register form
+        function showRegisterForm() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+        }
+
+        // Register New user
+        async function register() {
+            const username = document.getElementById('regUsername').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+
+            if (!username || !email || !password) {
+                showMessage('Please fill in all fields', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage('Registration successful! Please login.', 'success');
+                    showLoginForm();
+                    document.getElementById('regUsername').value = '';
+                    document.getElementById('regEmail').value = '';
+                    document.getElementById('regPassword').value = '';
+                } else {
+                    showMessage(data.error || 'Registration failed', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        // Login as a Registered user
+        async function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                showMessage('Please enter username and password', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    authToken = data.token;
+                    currentUser = data.user;
+                    document.getElementById('loggedInUser').textContent = currentUser.username;
+                    document.getElementById('loginForm').classList.add('hidden');
+                    document.getElementById('userInfo').classList.remove('hidden');
+                    document.getElementById('reviewForm').classList.remove('hidden');
+                    showMessage('Login successful!', 'success');
+                } else {
+                    showMessage(data.error || 'Login failed', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        // Logout
+        function logout() {
+            authToken = null;
+            currentUser = null;
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('userInfo').classList.add('hidden');
+            document.getElementById('reviewForm').classList.add('hidden');
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            showMessage('Logged out successfully', 'success');
+        }
+
+        // Get the book list available in the shop
+        async function getAllBooks() {
+            try {
+                const response = await fetch('/api/books');
+                const data = await response.json();
+
+                if (response.ok) {
+                    displayBooks(data.books, `All Books (${data.count} found)`);
+                } else {
+                    showMessage(data.error || 'Failed to fetch books', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        // Get books based on ISBN
+        async function searchByISBN() {
+            const isbn = document.getElementById('isbnSearch').value;
+            if (!isbn) {
+                showMessage('Please enter an ISBN', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/books/isbn/${isbn}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    displayBooks([data.book], 'Book Found by ISBN');
+                } else {
+                    showMessage(data.error || 'Book not found', 'error');
+                    document.getElementById('results').innerHTML = '';
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        // Get all books by Author
+        async function searchByAuthor() {
+            const author = document.getElementById('authorSearch').value;
+            if (!author) {
+                showMessage('Please enter an author name', 'error');
+                return;
+            }
+
+            try {
+                const encodedAuthor = encodeURIComponent(author);
+                const response = await fetch(`/api/books/author/${encodedAuthor}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    displayBooks(data.books, `Books by ${author} (${data.count} found)`);
+                } else {
+                    showMessage(data.error || 'No books found', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        // Get all books based on Title
+        async function searchByTitle() {
+            const title = document.getElementById('titleSearch').value;
+            if (!title) {
+                showMessage('Please enter a title', 'error');
+                return;
+            }
+
+            try {
+                const encodedTitle = encodeURIComponent(title);
+                const response = await fetch(`/api/books/title/${encodedTitle}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    displayBooks(data.books, `Books with title containing "${title}" (${data.count} found)`);
+                } else {
+                    showMessage(data.error || 'No books found', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        // Get book Review
+        async function getBookReviews() {
+            const isbn = document.getElementById('reviewISBN').value;
+            if (!isbn) {
+                showMessage('Please enter an ISBN', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/reviews/${isbn}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    displayReviews(data.reviews, `Reviews for ISBN: ${isbn} (${data.count} reviews)`);
+                } else {
+                    showMessage(data.error || 'Failed to fetch reviews', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        // Add/Modify a book review
+        async function addOrModifyReview() {
+            if (!authToken) {
+                showMessage('Please login first', 'error');
+                return;
+            }
+
+            const isbn = document.getElementById('addReviewISBN').value;
+            const rating = document.getElementById('reviewRating').value;
+            const comment = document.getElementById('reviewComment').value;
+
+            if (!isbn || !rating) {
+                showMessage('ISBN and rating are required', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/reviews', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ isbn, rating, comment })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage(data.message, 'success');
+                    document.getElementById('addReviewISBN').value = '';
+                    document.getElementById('reviewComment').value = '';
+                    // Refresh reviews
+                    if (isbn) {
+                        document.getElementById('reviewISBN').value = isbn;
+                        getBookReviews();
+                    }
+                } else {
+                    showMessage(data.error || 'Failed to add/modify review', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        // Delete book review added by that particular user
+        async function deleteReview() {
+            if (!authToken) {
+                showMessage('Please login first', 'error');
+                return;
+            }
+
+            const isbn = document.getElementById('addReviewISBN').value;
+            if (!isbn) {
+                showMessage('Please enter an ISBN', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/reviews/${isbn}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage(data.message, 'success');
+                    document.getElementById('addReviewISBN').value = '';
+                    document.getElementById('reviewComment').value = '';
+                    // Refresh reviews
+                    getBookReviews();
+                } else {
+                    showMessage(data.error || 'Failed to delete review', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        // Display books
+        function displayBooks(books, title) {
+            const resultsDiv = document.getElementById('results');
+            if (!books || books.length === 0) {
+                resultsDiv.innerHTML = '<p>No books found.</p>';
+                return;
+            }
+
+            let html = `<h2>${title}</h2>`;
+            books.forEach(book => {
+                html += `
+                    <div class="book-card">
+                        <h3>${book.title}</h3>
+                        <p><strong>Author:</strong> ${book.author}</p>
+                        <p><strong>ISBN:</strong> ${book.isbn}</p>
+                        <p><strong>Year:</strong> ${book.year}</p>
+                        <p><strong>Genre:</strong> ${book.genre}</p>
+                    </div>
+                `;
+            });
+            resultsDiv.innerHTML = html;
+        }
+
+        // Display reviews
+        function displayReviews(reviews, title) {
+            const resultsDiv = document.getElementById('results');
+            if (!reviews || reviews.length === 0) {
+                resultsDiv.innerHTML = `<h2>${title}</h2><p>No reviews found for this book.</p>`;
+                return;
+            }
+
+            let html = `<h2>${title}</h2>`;
+            reviews.forEach(review => {
+                const stars = '⭐'.repeat(review.rating);
+                html += `
+                    <div class="review-card">
+                        <p><strong>User:</strong> ${review.username}</p>
+                        <p><strong>Rating:</strong> <span class="rating">${stars} (${review.rating}/5)</span></p>
+                        <p><strong>Comment:</strong> ${review.comment || 'No comment'}</p>
+                        <p><strong>Date:</strong> ${new Date(review.updatedAt).toLocaleString()}</p>
+                    </div>
+                `;
+            });
+            resultsDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
+
