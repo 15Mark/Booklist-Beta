@@ -4,7 +4,7 @@ A comprehensive book management application with user authentication and review 
 
 ## Features
 
-### General Users (Tasks 1-7)
+### General Users 
 - Get the book list available in the shop
 - Get books based on ISBN
 - Get all books by Author
@@ -13,11 +13,11 @@ A comprehensive book management application with user authentication and review 
 - Register New user
 - Login as a Registered user
 
-### Registered Users (Tasks 8-9)
+### Registered Users 
 - Add/Modify a book review
 - Delete book review added by that particular user
 
-### Node.js Client Methods (Tasks 10-13)
+### Node.js Client Methods
 - Get all books – Using async/await
 - Search by ISBN – Using Promises
 - Search by Author – Using async/await
