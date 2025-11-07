@@ -41,7 +41,7 @@ The server will run on `http://localhost:3000`
 
 2. Open your browser and navigate to `http://localhost:3000` to access the web interface.
 
-3. To run the Node.js client examples (Tasks 10-13):
+3. To run the Node.js client examples:
 ```bash
 npm run client
 ```
@@ -91,7 +91,7 @@ Include the JWT token in the Authorization header: `Bearer <token>`
 ```
 My Booklist/
 ├── server.js          # Express server with all API endpoints
-├── client.js          # Node.js client methods (Tasks 10-13)
+├── client.js          # Node.js client methods
 ├── package.json       # Dependencies and scripts
 ├── public/
 │   └── index.html     # Web interface
