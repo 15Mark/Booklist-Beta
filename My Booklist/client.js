@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const BASE_URL = 'http://localhost:3000/api';
 
-// Task 10: Get all books – Using async callback function
+//Get all books – Using async callback function
 async function getAllBooks() {
   try {
     console.log('\n=== Task 10: Get all books (async/await) ===');
@@ -18,7 +18,7 @@ async function getAllBooks() {
   }
 }
 
-// Task 11: Search by ISBN – Using Promises
+//Search by ISBN – Using Promises
 function searchByISBN(isbn) {
   console.log('\n=== Task 11: Search by ISBN (Promises) ===');
   return axios.get(`${BASE_URL}/books/isbn/${isbn}`)
@@ -51,7 +51,7 @@ async function searchByAuthor(author) {
   }
 }
 
-// Task 13: Search by Title
+//Search by Title
 async function searchByTitle(title) {
   try {
     console.log('\n=== Task 13: Search by Title (async/await) ===');
@@ -101,4 +101,5 @@ module.exports = {
   searchByAuthor,
   searchByTitle
 };
+
 
